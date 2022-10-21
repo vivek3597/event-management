@@ -61,7 +61,41 @@ void student::initial()
  ifile.close();
  return;
  }
- 
+ void student::read()
+{
+clrscr();
+  int i;
+  gotoxy(20,2);
+  for(i=0;i<50;i++) cout<<"*";
+  gotoxy(35,4);
+  cout<<"ADD AN EVENT";
+  gotoxy(20,6);
+  for(i=0;i<50;i++) cout<<"*";
+  gotoxy(20,8);
+ cout<<"ENTER EVENT DETAILS:"<<endl;
+ cout<<"\tEnter the event id:(ev__)";gets(eid);
+ cout<<"\tEnter the event name:";    gets(ename);
+ cout<<"\tEnter the time of conduct:";gets(toc);
+ cout<<"\tEnter the registeration fee:";gets(rfee);
+ cout<<"\tEnter the prize money:";      gets(pamt);
+ strcpy(buffer,eid);             strcat(buffer,"|");
+ strcat(buffer,ename);             strcat(buffer,"|");
+ strcat(buffer,toc);               strcat(buffer,"|");
+ strcat(buffer,rfee);             strcat(buffer,"|");
+ strcat(buffer,pamt);             strcat(buffer,"|");
+ return;
+}
+int hash(char key[])
+{
+  int i=0,sum=0;
+  while(key[i]!='\0')
+  {
+    sum=sum+(key[i]);
+    i++;
+    }
+ return sum % max;
+ }
+
  
  
  
