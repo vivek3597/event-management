@@ -137,7 +137,56 @@ void store(int addr)
  ifile.close();
  return;
 }
-
+void student::retrieve(int addr,char k[])
+{
+ int found=0,i;
+ char dummy[10];
+ i=addr;
+ file.open(studentfile,ios::in|ios::out);
+ do
+ {
+	 file.seekg(i*recsize,ios::beg);
+	 file.getline(dummy,5,'\n');
+	 if(strcmp(dummy,"####")==0)
+	 break;
+	 file.seekg(i*recsize,ios::beg);
+	 file.getline(eid,15,'|');
+	 if(strcmp(eid,k)==0)
+	 {
+		found=1;
+		textcolor(RED);
+		cout<<"\n";
+		gotoxy(20,12);
+		cout<<"RECORD FOUND!!\n";
+		cout<<endl;
+		file.getline(ename,20,'|');
+		 file.getline(toc,10,'|');
+		file.getline(rfee,5,'|');
+		file.getline(pamt,5,'|');
+		gotoxy(20,14);
+		cout<<"ID:"<<eid<<endl;
+		gotoxy(20,15);
+		cout<<"NAME:"<<ename;
+		gotoxy(20,16);
+		cout<<"Time Of Conduct:"<<toc;
+		gotoxy(20,17);
+		cout<<"Registeration Fee:"<<rfee;
+		gotoxy(20,18);
+		cout<<"Prize Amount:"<<pamt;
+		break;
+	 }
+	 else
+	 {
+		i++;
+		if(i%max==0)
+		i=0;
+	 }
+ } while(i!=addr);
+ if(found==0)
+ cout<<"\n\t\t\trecord does not exist in hash file\n";
+ getch();
+ return;
+ }
  
  
  
