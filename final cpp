@@ -377,6 +377,39 @@ if(found==0)
  ifile.close();
  return;
  }
+ void screen()
+{
+	int i;
+	textcolor(YELLOW);
+	clrscr();
+	gotoxy(20,2);
+	for(i=0;i<50;i++) cout<<"*";
+	gotoxy(20,4);
+	cout<<"*";
+	gotoxy(36,4);
+	cout<<"MAIN MENU";
+	gotoxy(70,4);
+	cout<<"*";
+	gotoxy(20,6);
+	for(i=0;i<50;i++) cout<<"*";
+	gotoxy(30,8);
+	cout<<"* "<<"1. Add an event"<<endl;
+	gotoxy(30,10);
+	cout<<"* "<<"2. Display events in Datafile"<<endl;
+	gotoxy(30,12);
+	cout<<"* "<<"3. Search event details"<<endl;
+	gotoxy(30,14);
+	cout<<"* "<<"4. Display all event"<<endl;
+	gotoxy(30,16);
+	cout<<"* "<<"5. Delete an event "<<endl;
+	gotoxy(30,18);
+	cout<<"* "<<"6. Modify an event"<<endl;
+	gotoxy(30,20);
+	cout<<"* "<<"7. Quit Program\n";
+	gotoxy(20,22);
+	for(i=0;i<50;i++) cout<<"*";
+}
+
 
 
 
