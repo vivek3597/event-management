@@ -96,6 +96,48 @@ int hash(char key[])
  return sum % max;
  }
 
+void store(int addr)
+{
+ char dummy[10];
+ int flag=0,i;
+ ifile.open(datafile,ios::app);
+ ifile.fill('*');
+ ifile<<setiosflags(ios::left)<<setw(sizeof(student))<<buffer<<endl;
+ file.open(studentfile,ios::in|ios::out);
+ file.seekp(addr*recsize,ios::beg);
+ file.getline(dummy,5,'\n');
+ if(strcmp(dummy,"####")==0)
+ {
+	file.seekp(addr*recsize,ios::beg);
+	file<<buffer;
+	flag=1;
+ }
+ else
+ {
+	for(i=addr+1;i!=addr;i++)
+	{
+		if(i%max==0)
+		i=0;
+		file.seekg(i*recsize,ios::beg);
+		file.getline(dummy,5,'\n');
+		if(strcmp(dummy,"####")==0)
+		{
+		 //	cout<<"\n collision has occured\n";
+		   //	cout<<"home address is:"<<addr<<"actual address is:"<<i<<"\n";
+			file.seekp(i*recsize,ios::beg);
+			file<<buffer;
+			flag=1;
+			break;
+		 }
+		}
+	}
+ if(i==addr && (!flag))
+ cout<<"hash file is full,record cannot be inserted\n";
+ file.close();
+ ifile.close();
+ return;
+}
+
  
  
  
