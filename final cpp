@@ -270,6 +270,37 @@ void student::edelete(int addr,char k[])
  getch();
  return;
 }
+void student::ddisp()
+{
+   clrscr();
+ char dummy[80];
+ ifile.open(datafile,ios::in);
+ cout<<setiosflags(ios::left);
+ cout<<"\t\t\t\tEVENT DETAILS"<<endl;
+ cout<<"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
+ cout<<"\t"<<setw(10)<<"ID"<<setw(20)<<"NAME"<<setw(15)<<"CONDUCT TIME"<<setw(10)<<"FEE"<<setw(10)<<"PRIZE"<<endl;
+ cout<<"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
+
+ while(1)
+ {
+	 ifile.getline(eid,15,'|');
+	 ifile.getline(ename,20,'|');
+	 ifile.getline(toc,10,'|');
+	 ifile.getline(rfee,5,'|');
+	 ifile.getline(pamt,5,'|');
+	 ifile.getline(dummy,80,'\n');
+	 if(ifile.eof())
+		break;
+	 if(eid[0]!='$')
+	 {
+		cout<<"\t"<<setw(10)<<eid<<setw(20)<<ename<<setw(15)<<toc<<setw(10)<<rfee<<setw(10)<<pamt<<"\n";
+
+	 }
+ }
+ ifile.close();
+ getch();
+}
+
 
  
  
