@@ -218,6 +218,58 @@ clrscr();
  file.close();
  getch();
 }
+void student::edelete(int addr,char k[])
+{
+ int found=0,i,j,fn;
+ char dummy[10],temp[80];
+ i=addr;
+ ifile.open(datafile,ios::in|ios::out);
+ while(!(ifile.eof()))
+ {      fn = ifile.tellg();
+	ifile.getline(eid,15,'|');
+	ifile.getline(temp,80,'\n');
+	if(strcmp(eid,k)==0)
+	{
+		ifile.seekg(fn,ios::beg);
+		ifile.put('$');
+	}
+ }
+ ifile.close();
+ file.open(studentfile,ios::in|ios::out);
+ do
+ {
+	 file.seekg(i*recsize,ios::beg);
+	 file.getline(dummy,5,'\n');
+	 if(strcmp(dummy,"####")==0)
+	 break;
+	 file.seekg(i*recsize,ios::beg);
+	 file.getline(eid,15,'|');
+	 if(strcmp(eid,k)==0)
+	 {
+		found=1;
+
+		cout<<"\n\t\t\t\tRECORD FOUND!!\n";
+		cout<<endl;
+		file.getline(ename,20,'|');
+		cout<<"\t\t\t\tkey="<<eid<<endl<<"\n\t\t\t\tname="<<ename<<"\n";
+		file.seekg(i*recsize,ios::beg);
+		for(j=0;j<recsize-2;j++)
+			file<<"#";
+		file<<endl;
+		break;
+	 }
+	 else
+	 {
+		i++;
+		if(i%max==0)
+		i=0;
+	 }
+ } while(i!=addr);
+ if(found==0)
+ cout<<"\n\t\t\trecord does not exist in hash file\n";
+ getch();
+ return;
+}
 
  
  
