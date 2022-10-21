@@ -1,0 +1,145 @@
+#include<fstream.h>
+#include<conio.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<iostream.h>
+#include<iomanip.h>
+#define studentfile"event.txt"
+#define datafile"dat.txt"
+#define recsize 80
+#define max 100
+#include<dir.h>
+#include<dos.h>
+#include<bios.h>
+#include<graphics.h>
+
+fstream file,ifile;
+char buffer[85];
+class student
+
+{
+     public:
+	      char eid[15],ename[20],rfee[5],pamt[5],toc[10];
+	      void initial();
+	      void read();
+	      void retrieve(int addr,char k[]);
+	      void display();
+	      void ddisp();
+	      void edelete(int addr,char k[]);
+	      void modify(int addr,char k[]);
+ };
+void student::initial()
+{
+  int i,j;
+  ifile.open(datafile,ios::app);
+  if(!ifile)
+  {
+	cout<<"Unable to open a file"<<endl;
+	getch();
+	exit(1);
+  }
+  file.open(studentfile,ios::in);
+  if(!file)
+  {
+     file.open(studentfile,ios::out);
+     if(!file)
+     {
+      cout<<"unable to open the file";
+      exit(1);
+      }
+    for(i=0;i<max;i++)
+    {
+     file.seekp(i*recsize,ios::beg);
+     for(j=0;j<recsize-2;j++)
+     file<<"#";
+     file<<endl;
+   }
+ cout<<"empty file created";
+ }
+ file.close();
+ ifile.close();
+ return;
+ }
+ 
+ 
+ 
+ 
+ 
+void main()
+{
+ int ch,addr,i,j;
+ char skey[15],dkey[15],mkey[15];
+ student s;
+ clrscr();
+ s.initial();
+ for(;;)
+ {
+	screen();
+	gotoxy(20,24);
+	cout<<"ENTER YOUR CHOICE:";
+	cin>>ch;
+	switch(ch)
+	{
+		case 1:
+			s.read();
+			addr=hash(s.eid);
+			store(addr);
+			break;
+		case 2:s.ddisp();
+			break;
+		case 3: clrscr();
+			gotoxy(20,2);
+			for(i=0;i<50;i++) cout<<"*";
+			gotoxy(30,4);
+			cout<<"SEARCH FOR EVENT DETAILS";
+			gotoxy(20,6);
+			for(i=0;i<50;i++) cout<<"*";
+			gotoxy(20,8);
+			cout<<"ENTER EVENT ID:";
+			cin>>skey;
+			gotoxy(20,10);
+			cout<<"++++++++++++++++++++++++++++++++"<<endl;
+			addr=hash(skey);
+			s.retrieve(addr,skey);
+			break;
+		case 4:
+			s.display();
+			break;
+		case 5: clrscr();
+			gotoxy(20,2);
+			for(i=0;i<50;i++) cout<<"*";
+			gotoxy(30,4);
+			cout<<"DELETE AN EVENT";
+			gotoxy(20,6);
+			for(i=0;i<50;i++) cout<<"*";
+			gotoxy(20,8);
+			cout<<"Enter the ID to delete:";
+			cin>>dkey;
+			gotoxy(20,10);
+			cout<<"+++++++++++++++++++++++++++++++++++++++++++"<<endl;
+			addr=hash(dkey);
+			s.edelete(addr,dkey);
+			break;
+		case 6:clrscr();
+			gotoxy(20,2);
+			for(i=0;i<50;i++) cout<<"*";
+			gotoxy(30,4);
+			cout<<"MODIFY AN EVENT";
+			gotoxy(20,6);
+			for(i=0;i<50;i++) cout<<"*";
+			gotoxy(20,8);
+			cout<<"ENTER EVENT ID:";
+			cin>>mkey;
+			gotoxy(20,10);
+			cout<<"++++++++++++++++++++++++++++++++"<<endl;
+			addr=hash(mkey);
+			s.modify(addr,mkey);
+			break;
+		default:exit(0);
+			break;
+
+ }
+ file.close();
+}
+}
