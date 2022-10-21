@@ -300,6 +300,84 @@ void student::ddisp()
  ifile.close();
  getch();
 }
+void student::modify(int addr,char k[])
+{
+ int found=0,i,count,fn;
+ char dummy[10],temp[80];
+ i=addr;
+ ifile.open(datafile,ios::in|ios::out);
+ while(!(ifile.eof()))
+ {      fn = ifile.tellg();
+	ifile.getline(eid,15,'|');
+	ifile.getline(temp,80,'\n');
+	if(strcmp(eid,k)==0)
+	{
+		ifile.seekg(fn,ios::beg);
+		ifile.put('$');
+	}
+ }
+ ifile.close();
+ file.open(studentfile,ios::in|ios::out);
+ do
+ {
+	 file.seekg(i*recsize,ios::beg);
+	 file.getline(dummy,5,'\n');
+	 if(strcmp(dummy,"####")==0)
+	 break;
+	 file.seekg(i*recsize,ios::beg);
+	 file.getline(eid,15,'|');
+	 if(strcmp(eid,k)==0)
+	 {
+		found=1;
+		textcolor(RED);
+		cout<<"\n";
+		gotoxy(20,12);
+		cout<<"RECORD FOUND!!\n";
+		cout<<endl;
+		file.getline(ename,20,'|');
+		gotoxy(20,13);
+		cout<<"ID:"<<eid<<endl;
+		gotoxy(20,14);
+		cout<<"NAME:"<<ename<<"\n";
+		file.getline(ename,20,'|');
+		gotoxy(20,16);
+		cout<<"Enter the event name:";
+		gets(ename);
+		gotoxy(20,17);
+		cout<<"Enter the time of conduct:";
+		gets(toc);
+		gotoxy(20,18);
+		cout<<"Enter the registration fee:";
+		gets(rfee);
+		gotoxy(20,19);
+		cout<<"Enter the prize amount:";
+		gets(pamt);
+		strcpy(buffer,eid);             strcat(buffer,"|");
+		strcat(buffer,ename);             strcat(buffer,"|");
+		strcat(buffer,toc);               strcat(buffer,"|");
+		strcat(buffer,rfee);             strcat(buffer,"|");
+		strcat(buffer,pamt);             strcat(buffer,"|");
+		file.seekp(addr*recsize,ios::beg);
+		file<<buffer;
+		break;
+	 }
+	 else
+	 {
+		i++;
+		if(i%max==0)
+		i=0;
+	 }
+ } while(i!=addr);
+if(found==0)
+ cout<<"\n\t\t\trecord does not exist in hash file\n";
+ getch();
+  ifile.open(datafile,ios::app);
+ ifile.fill('*');
+ ifile<<setiosflags(ios::left)<<setw(sizeof(student))<<buffer<<endl;
+ ifile.close();
+ return;
+ }
+
 
 
  
